@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roland's Coiffure - Réservation</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #fff7fb;
+    color: #333;
+}
+
+header {
+    background: linear-gradient(135deg, #e879b9, #9271d8);
+    color: white;
+    text-align: center;
+    padding: 55px 20px;
+}
+
+header h1 {
+    font-size: 36px;
+    margin-bottom: 12px;
+}
+
+header p {
+    font-size: 17px;
+}
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 30px 20px;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #9b4b91;
+}
+
+.filters {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+}
+
+.filters button {
+    border: 2px solid #c46aaf;
+    background: white;
+    color: #9b4b91;
+    padding: 11px 24px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.filters button.active,
+.filters button:hover {
+    background: #c46aaf;
+    color: white;
+}
+
+.services {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 22px;
+}
+
+.service-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px #00000012;
+    padding-bottom: 18px;
+    text-align: center;
+}
+
+.service-card img {
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+}
+
+.service-card h3 {
+    margin: 15px 8px 8px;
+}
+
+.service-card p {
+    color: #9b4b91;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.service-card button,
+.submit-btn {
+    background: #bd65a8;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 11px 20px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.service-card button:hover,
+.submit-btn:hover {
+    background: #94477f;
+}
+
+.cart,
+.booking {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    margin-top: 35px;
+    box-shadow: 0 4px 15px #00000012;
+}
+
+.cart ul {
+    padding-left: 20px;
+    margin: 15px 0;
+}
+
+.cart li {
+    margin-bottom: 8px;
+}
+
+.total {
+    font-weight: bold;
+    color: #9b4b91;
+    margin-top: 15px;
+    font-size: 19px;
+}
+
+form {
+    display: grid;
+    gap: 14px;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+.submit-btn {
+    padding: 14px;
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    background: #f1d7eb;
+    margin-top: 40px;
+}
+
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 28px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Roland's Coiffure</h1>
+    <p>Votre beauté, notre passion ✨</p>
+    <p>Réservez votre rendez-vous en quelques clics</p>
+</header>
+
+<main class="container">
+
+    <h2>Nos prestations</h2>
+
+    <div class="filters">
+        <button class="active" data-filter="tous">Tous</button>
+        <button data-filter="homme">Homme</button>
+        <button data-filter="femme">Femme</button>
+    </div>
+
+    <div class="services" id="services">
+
+        <article class="service-card" data-category="homme">
+            <img src="images/homme-classique.jpg" alt="Coupe classique">
+            <h3>Coupe classique</h3>
+            <p>3 000 FCFA</p>
+            <button onclick="ajouterAuPanier('Coupe classique', 3000)">
+                Ajouter
+            </button>
+        </article>
+
+        <article class="service-card" data-category="homme">
+            <img src="images/homme-barbe.jpg" alt="Coupe et barbe">
+            <h3>Coupe + barbe</h3>
+            <p>5 000 FCFA</p>
+            <button onclick="ajouterAuPanier('Coupe + barbe', 5000)">
+                Ajouter
+            </button>
+        </article>
+
+        <article class="service-card" data-category="femme">
+            <img src="images/femme-normale.jpg" alt="Coupe normale">
+            <h3>Coupe normale</h3>
+            <p>4 000 FCFA</p>
+            <button onclick="ajouterAuPanier('Coupe normale', 4000)">
+                Ajouter
+            </button>
+        </article>
+
+        <article class="service-card" data-category="femme">
+            <img src="images/femme-coloration.jpg" alt="Coloration">
+            <h3>Coloration</h3>
+            <p>7 000 FCFA</p>
+            <button onclick="ajouterAuPanier('Coloration', 7000)">
+                Ajouter
+            </button>
+        </article>
+
+    </div>
+
+    <section class="cart">
+        <h2>Mon panier</h2>
+        <ul id="liste-panier">
+            <li>Aucune prestation sélectionnée.</li>
+        </ul>
+        <p class="total">Total : <span id="total">0</span> FCFA</p>
+        <button class="submit-btn" type="button" onclick="viderPanier()">
+            Vider le panier
+        </button>
+    </section>
+
+    <section class="booking">
+        <h2>Réserver un rendez-vous</h2>
+
+        <form id="reservation-form">
+            <input type="text" id="nom" placeholder="Votre nom" required>
+            <input type="tel" id="telephone" placeholder="Votre numéro de téléphone" required>
+            <label for="date">Date du rendez-vous</label>
+            <input type="date" id="date" required>
+
+            <label for="heure">Heure du rendez-vous</label>
+            <select id="heure" required>
+                <option value="">Choisir une heure</option>
+                <option>08:00</option>
+                <option>09:00</option>
+                <option>10:00</option>
+                <option>11:00</option>
+                <option>12:00</option>
+                <option>14:00</option>
+                <option>15:00</option>
+                <option>16:00</option>
+                <option>17:00</option>
+            </select>
+
+            <button class="submit-btn" type="submit">
+                Réserver sur WhatsApp
+            </button>
+        </form>
+    </section>
+
+</main>
+
+<footer>
+    <p>© 2026 Roland's Coiffure - Tous droits réservés</p>
+    <p>Ouvert du lundi au samedi : 08h00 - 17h00</p>
+</footer>
+
+<script>
+const numeroWhatsApp = "2290147362124";
+
+let panier = [];
+
+const boutonsFiltres = document.querySelectorAll(".filters button");
+const cartes = document.querySelectorAll(".service-card");
+
+boutonsFiltres.forEach(function(bouton) {
+    bouton.addEventListener("click", function() {
+
+        const categorie = bouton.dataset.filter;
+
+        boutonsFiltres.forEach(function(btn) {
+            btn.classList.remove("active");
+        });
+
+        bouton.classList.add("active");
+
+        cartes.forEach(function(carte) {
+            if (categorie === "tous" ||
+                carte.dataset.category === categorie) {
+                carte.style.display = "block";
+            } else {
+                carte.style.display = "none";
+            }
+        });
+    });
+});
+
+function ajouterAuPanier(nom, prix) {
+    panier.push({ nom: nom, prix: prix });
+    afficherPanier();
+}
+
+function afficherPanier() {
+    const liste = document.getElementById("liste-panier");
+    const totalElement = document.getElementById("total");
+
+    liste.innerHTML = "";
+
+    if (panier.length === 0) {
+        liste.innerHTML = "<li>Aucune prestation sélectionnée.</li>";
+    }
+
+    let total = 0;
+
+    panier.forEach(function(service, index) {
+        const li = document.createElement("li");
+
+        li.textContent =
+            service.nom + " - " + service.prix.toLocaleString("fr-FR") +
+            " FCFA ";
+
+        const supprimer = document.createElement("button");
+        supprimer.textContent = "Retirer";
+        supprimer.type = "button";
+
+        supprimer.addEventListener("click", function() {
+            panier.splice(index, 1);
+            afficherPanier();
+        });
+
+        li.appendChild(supprimer);
+        liste.appendChild(li);
+
+        total += service.prix;
+    });
+
+    totalElement.textContent = total.toLocaleString("fr-FR");
+}
+
+function viderPanier() {
+    panier = [];
+    afficherPanier();
+}
+
+document.getElementById("reservation-form")
+.addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    if (panier.length === 0) {
+        alert("Veuillez choisir au moins une prestation.");
+        return;
+    }
+
+    const nom = document.getElementById("nom").value.trim();
+    const telephone = document.getElementById("telephone").value.trim();
+    const date = document.getElementById("date").value;
+    const heure = document.getElementById("heure").value;
+
+    const total = panier.reduce(function(somme, service) {
+        return somme + service.prix;
+    }, 0);
+
+    const prestations = panier.map(function(service) {
+        return "- " + service.nom + " : " +
+            service.prix.toLocaleString("fr-FR") + " FCFA";
+    }).join("\n");
+
+    const message =
+        "Bonjour Roland's Coiffure !\n\n" +
+        "Je souhaite réserver un rendez-vous.\n\n" +
+        "Nom : " + nom + "\n" +
+        "Téléphone : " + telephone + "\n" +
+        "Date : " + date + "\n" +
+        "Heure : " + heure + "\n\n" +
+        "Prestations :\n" + prestations + "\n\n" +
+        "Total : " + total.toLocaleString("fr-FR") + " FCFA";
+
+    const url = "https://wa.me/" + numeroWhatsApp +
+        "?text=" + encodeURIComponent(message);
+
+    window.open(url, "_blank");
+});
+</script>
+
+</body>
+</html>
