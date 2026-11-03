@@ -109,12 +109,12 @@ footer{text-align:center;color:#6b7280;font-size:.85rem;padding:0 0 30px}
   </section>
 </main>
 
-<footer>© <span id="year"></span> <span id="brand2">EBOOKPAY</span></footer>
+<footer>© <span id="year"></span> <span id="brand2">Roland's Coiffure</span></footer>
 
 <a class="fab" href="#rdv" aria-label="Voir ma sélection">📅<span id="count">0</span></a>
 
 <script>
-  
+
 const CONFIG = {
   brand: "Roland's Coiffure",
   whatsapp: "2290147362124",
@@ -122,18 +122,21 @@ const CONFIG = {
     {cat: "Homme", nom: "Coupe classique",     prix: 3000,  photo: "images/homme-classique.jpg"},
     {cat: "Homme", nom: "Coupe + barbe",       prix: 5000,  photo: "images/homme-barbe.jpg"},
     {cat: "Femme", nom: "Coupe normale",       prix: 4000,  photo: "images/femme-normale.jpg"},
-    {cat: "Femme", nom: "Coloration",          prix: 7000, photo: "images/femme homme-coloration.jpg"},
+    {cat: "Femme", nom: "Coloration",          prix: 7000,  photo: "images/femme-coloration.jpg"}
   ],
   heures: ["08:00","09:00","10:00","11:00","12:00","14:00","15:00","16:00","17:00"],
-  joursFermes: [0],
+  joursFermes: [0]
 };
+
 
 const $ = id => document.getElementById(id);
 const fmt = n => n.toLocaleString("fr-FR") + " FCFA";
 const selected = new Set();
 
-$("brand").textContent = $("brand2").textContent = CONFIG.brand;
-$("year").textContent = new Date().getFullYear();
+if ($("brand")) $("brand").textContent = CONFIG.brand;
+if ($("brand2")) $("brand2").textContent = CONFIG.brand;
+if ($("year")) $("year").textContent = new Date().getFullYear();
+
 
 $("grid").innerHTML = CONFIG.services.map((s, i) => `
   <article class="item" data-cat="${s.cat}">
@@ -192,6 +195,7 @@ $("heure").innerHTML = '<option value="">Choisir…</option>' + CONFIG.heures.ma
 const today = new Date();
 $("date").min = new Date(today.getTime() - today.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
 render();
+
 
 $("form").addEventListener("submit", e => {
   e.preventDefault();
